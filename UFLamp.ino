@@ -1,5 +1,5 @@
 int relay1 = 12; // UF VD1
-int relay2 = 11; // UF VD
+int relay2 = 11; // UF VD2
 int but1 = A0; //3 ButtonGroup№1
 int but2 = A1; //3 ButtonGroup№2
 int r1=0; // flag state relay1
@@ -24,113 +24,114 @@ void setup() {
   Serial.println("//-------if(Xtime Rx_ON==Xtime Rx_OFF){GOOD}--Else {BAD}--------//");
   Serial.println("//--------------------------------------------------------------//");
   
-  // put your setup code here, to run once:
-pinMode(relay1, OUTPUT); // set mode pin in out
-pinMode(relay2, OUTPUT); // set mode pin in out
-digitalWrite(relay1,HIGH); // OFF Relay1 (invers ON/OFF )
-digitalWrite(relay2,HIGH); // OFF Relay2 (invers ON/OFF )
+  
+  pinMode(relay1, OUTPUT); // set mode pin in out
+  pinMode(relay2, OUTPUT); // set mode pin in out
+  digitalWrite(relay1,HIGH); // OFF Relay1 (invers ON/OFF )
+  digitalWrite(relay2,HIGH); // OFF Relay2 (invers ON/OFF )
 }
 
 void loop() {
   but1State=analogRead(but1); // Read state 3 ButtonGroup№1 
   but2State=analogRead(but2); // Read state 3 ButtonGroup№2
-timer=millis(); // initialise timer
+  timer=millis(); // initialise timer
+
 if (but1State>500 && but1State<550 && r1==0){
-  digitalWrite(relay1,LOW); // ON Relay1
-  pause1=30000; // set pause ON Reley1 30 sec. 
-  r1=1; // update state flag (no repeat push button) 
-  premillis1=millis(); // update (write in) premillis1 this time
-  Serial.print("R1_ON : ");
-  Serial.print(pause1/1000);
-  Serial.print(" || time : ");
-  Serial.println(premillis1/1000);
-  delay(450); // small pause touch button
+   digitalWrite(relay1,LOW); // ON Relay1
+   pause1=30000; // set pause ON Reley1 30 sec. 
+   r1=1; // update state flag (no repeat push button) 
+   premillis1=millis(); // update (write in) premillis1 this time
+   Serial.print("R1_ON : ");
+   Serial.print(pause1/1000);
+   Serial.print(" || time : ");
+   Serial.println(premillis1/1000);
+   delay(450); // small pause touch button
 }
 else{}
+
 if (but1State>660 && but1State<690 && r1==0){
-  digitalWrite(relay1,LOW);
-  pause1=60000;
-  r1=1;
-  premillis1=millis();
-  Serial.print("R1_ON : ");
-  Serial.print(pause1/1000);
-  Serial.print(" || time : ");
-  Serial.println(premillis1/1000);
-  delay(450);
+   digitalWrite(relay1,LOW);
+   pause1=60000;
+   r1=1;
+   premillis1=millis();
+   Serial.print("R1_ON : ");
+   Serial.print(pause1/1000);
+   Serial.print(" || time : ");
+   Serial.println(premillis1/1000);
+   delay(450);
 }
 else{}
-if (but1State>750 && but1State<790 && r1==0){
-  digitalWrite(relay1,LOW);
-  pause1=120000;
-  r1=1;
-  premillis1=millis();
-  Serial.print("R1_ON : ");
-  Serial.print(pause1/1000);
-  Serial.print(" || time : ");
-  Serial.println(premillis1/1000);
   
-  delay(450);
+if (but1State>750 && but1State<790 && r1==0){
+   digitalWrite(relay1,LOW);
+   pause1=120000;
+   r1=1;
+   premillis1=millis();
+   Serial.print("R1_ON : ");
+   Serial.print(pause1/1000);
+   Serial.print(" || time : ");
+   Serial.println(premillis1/1000);
+   delay(450);
 }
 else{}
+
 if (but2State>500 && but2State<550 && r2==0){
-  digitalWrite(relay2,LOW);
-  pause2=30000;
-  r2=1;
-  premillis2=millis();
-    Serial.print("R2_ON : ");
-  Serial.print(pause2/1000);
-  Serial.print(" || time : ");
-  Serial.println(premillis2/1000);
-  delay(450);
+   digitalWrite(relay2,LOW);
+   pause2=30000;
+   r2=1;
+   premillis2=millis();
+   Serial.print("R2_ON : ");
+   Serial.print(pause2/1000);
+   Serial.print(" || time : ");
+   Serial.println(premillis2/1000);
+   delay(450);
 }
 else{}
+
 if (but2State>660 && but2State<690 && r2==0){
-  digitalWrite(relay2,LOW);
-  pause2=60000;
-  r2=1;
-  premillis2=millis();
-    Serial.print("R2_ON : ");
-  Serial.print(pause2/1000);
-  Serial.print(" || time : ");
-  Serial.println(premillis2/1000);
-  delay(450);
+   digitalWrite(relay2,LOW);
+   pause2=60000;
+   r2=1;
+   premillis2=millis();
+   Serial.print("R2_ON : ");
+   Serial.print(pause2/1000);
+   Serial.print(" || time : ");
+   Serial.println(premillis2/1000);
+   delay(450);
 }
 else{}
+
 if (but2State>750 && but2State<790 && r2==0){
-    digitalWrite(relay2,LOW);
-    pause2=120000;
-    r2=1;
-    premillis2=millis();
-  Serial.print("R2_ON : ");
-  Serial.print(pause2/1000);
-  Serial.print(" || time : ");
-  Serial.println(premillis2/1000);
-    delay(450);
+   digitalWrite(relay2,LOW);
+   pause2=120000;
+   r2=1;
+   premillis2=millis();
+   Serial.print("R2_ON : ");
+   Serial.print(pause2/1000);
+   Serial.print(" || time : ");
+   Serial.println(premillis2/1000);
+   delay(450);
+  }
+else{}
+if (timer- premillis1>pause1&&r1==1){
+   digitalWrite(relay1,HIGH); 
+   r1=0;
+   Serial.print("R1_OFF: ");
+   Serial.print(pause1/1000);
+   Serial.print(" || time : ");
+   Serial.println((timer-pause1)/1000); 
+   pause1=0;
   }
 else{}
 
-if(timer- premillis1>pause1&&r1==1){
-  digitalWrite(relay1,HIGH); 
-  r1=0;
-  Serial.print("R1_OFF: ");
-  Serial.print(pause1/1000);
-  Serial.print(" || time : ");
-  Serial.println((timer-pause1)/1000); 
-  pause1=0;
+if (timer- premillis2>pause2&&r2==1){
+   digitalWrite(relay2,HIGH); 
+   r2=0;
+   Serial.print("R2_OFF: ");
+   Serial.print(pause2/1000);
+   Serial.print(" || time : ");
+   Serial.println((timer-pause2)/1000);
+   pause2=0;
   }
 else{}
-if(timer- premillis2>pause2&&r2==1){
-  digitalWrite(relay2,HIGH); 
-  r2=0;
-  Serial.print("R2_OFF: ");
-  Serial.print(pause2/1000);
-  Serial.print(" || time : ");
-  Serial.println((timer-pause2)/1000);
-  pause2=0;
-  }
-else{}
-
-
- 
-
 }
